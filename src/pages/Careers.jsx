@@ -7,7 +7,7 @@ const Careers = () => {
     {
       title: "Lead HVAC Technician",
       type: "Full-Time",
-      location: "Grand Prairie & DFW",
+      location: "Denton County & North Tarrant County",
       description: "We're looking for an experienced tech with 5+ years in residential and light commercial HVAC. Must have EPA certification and a clean driving record.",
       pay: "$28 - $40 / hr"
     },
