@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Phone, Menu, X } from 'lucide-react';
 import logo from './assets/SCP-Refrigeration-Logo-1024x741.png';
+window.logoPath = logo;
+import Footer from './Footer';
 
 // IMPORT REAL PAGES
 import Home from './pages/Home';
@@ -79,7 +81,7 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-
+          <Footer />
       </div>
     </Router>
   );
