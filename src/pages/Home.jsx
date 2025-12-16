@@ -72,7 +72,7 @@ const Home = () => {
       <div className="py-20 bg-white">
         <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-3xl font-bold mb-6 text-gray-900">Why Grand Prairie Trusts SCP Refrigeration</h2>
+            <h2 className="text-3xl font-bold mb-6 text-gray-900">Why North Texas Trusts SCP Refrigeration</h2>
             <div className="space-y-6">
               <div className="flex gap-4">
                 <ShieldCheck className="w-8 h-8 text-green-600 flex-shrink-0" />

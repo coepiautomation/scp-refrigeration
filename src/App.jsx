@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Phone, Menu, X } from 'lucide-react';
+import logo from './assets/SCP-Refrigeration-Logo-1024x741.png';
 
 // IMPORT REAL PAGES
 import Home from './pages/Home';
@@ -28,11 +29,17 @@ function App() {
           </div>
         </div>
 
-        {/* Navigation Bar */}
+{/* Navigation Bar */}
         <nav className="bg-white shadow-md sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-            {/* Logo */}
-            <Link to="/" className="text-2xl font-extrabold text-hvac-blue">SCP REFRIGERATION</Link>
+          <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+            
+{/* LOGO SECTION */}
+            <Link to="/" className="flex items-center gap-3 group">
+              {/* This uses the "logo" variable we imported at the top */}
+              <img src={logo} className="h-16 w-auto my-0" alt="SCP Refrigeration Logo" />
+              
+
+            </Link>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex space-x-6 font-medium text-gray-700">
