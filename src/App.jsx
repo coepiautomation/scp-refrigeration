@@ -4,6 +4,7 @@ import { Phone, Menu, X } from 'lucide-react';
 import logo from './assets/SCP-Refrigeration-Logo-1024x741.png';
 window.logoPath = logo;
 import Footer from './Footer';
+import Careers from './pages/Careers'
 
 // IMPORT REAL PAGES
 import Home from './pages/Home';
@@ -50,6 +51,7 @@ function App() {
               <Link to="/residential" className="hover:text-hvac-blue transition">Residential</Link>
               <Link to="/commercial" className="hover:text-hvac-blue transition">Commercial</Link>
               <Link to="/gallery" className="hover:text-hvac-blue transition">Gallery</Link>
+              <Link to="/careers" className="hover:text-hvac-blue transition">Careers</Link>
               <Link to="/contact" className="bg-hvac-red text-white px-4 py-2 rounded-md hover:bg-red-700 transition">Contact Us</Link>
             </div>
 
@@ -79,6 +81,7 @@ function App() {
           <Route path="/residential" element={<Residential />} />
           <Route path="/commercial" element={<Commercial />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
           <Footer />
