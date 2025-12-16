@@ -75,11 +75,12 @@ const Careers = () => {
               </div>
               <p className="text-gray-600 mb-6 leading-relaxed">{job.description}</p>
               <Link 
-                to="/contact" 
+                to="/apply" 
                 className="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-lg font-bold hover:bg-hvac-blue transition"
               >
                 Apply Now <Send size={18} />
               </Link>
+              
             </div>
           ))}
         </div>

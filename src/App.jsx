@@ -5,6 +5,7 @@ import logo from './assets/SCP-Refrigeration-Logo-1024x741.png';
 window.logoPath = logo;
 import Footer from './Footer';
 import Careers from './pages/Careers'
+import Apply from './pages/Apply'
 
 // IMPORT REAL PAGES
 import Home from './pages/Home';
@@ -83,6 +84,7 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/apply" element={<Apply />} />
         </Routes>
           <Footer />
       </div>
