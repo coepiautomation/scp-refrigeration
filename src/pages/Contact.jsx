@@ -83,7 +83,7 @@ const Contact = () => {
                   <Phone className="w-6 h-6 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-semibold opacity-80">Phone</p>
-                    <a href="tel:+19407771234" className="text-xl font-bold hover:text-gray-200">(555) 123-4567</a>
+                    <a href="tel:+19407771234" className="text-xl font-bold hover:text-gray-200">(940) 777-1234</a>
                     <p className="text-sm opacity-75 mt-1">24/7 Emergency Service Available</p>
                   </div>
                 </div>
@@ -148,7 +148,7 @@ const Contact = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hvac-blue focus:border-transparent outline-none transition"
-                    placeholder="(555) 123-4567"
+                    placeholder="(940) 777-1234"
                   />
                 </div>
                 <div>
