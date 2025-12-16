@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Phone, Menu, X } from 'lucide-react';
-import { useState } from 'react';
 
-// Placeholder Components (We will build these out fully later)
-const Home = () => <div className="p-10 text-2xl font-bold">Home Page - Hero Section & Services Overview</div>;
-const About = () => <div className="p-10 text-2xl font-bold">About Us - History & Team</div>;
-const Residential = () => <div className="p-10 text-2xl font-bold">Residential Services</div>;
-const Commercial = () => <div className="p-10 text-2xl font-bold">Commercial & Refrigeration</div>;
-const Gallery = () => <div className="p-10 text-2xl font-bold">Project Gallery</div>;
-const Contact = () => <div className="p-10 text-2xl font-bold">Contact Form & Maps</div>;
+// IMPORT REAL PAGES
+import Home from './pages/Home';
+import About from './pages/About';
+import Residential from './pages/Residential';
+import Commercial from './pages/Commercial';
+import Gallery from './pages/Gallery';
+import Contact from './pages/Contact';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,7 +21,7 @@ function App() {
         <div className="bg-hvac-blue text-white py-2 px-4 text-center md:text-right">
           <div className="container mx-auto flex justify-between items-center md:justify-end">
             <span className="text-sm md:text-base font-medium mr-4 hidden md:inline">Emergency Service 24/7</span>
-            <a href="tel:+1234567890" className="flex items-center gap-2 font-bold hover:text-gray-200">
+            <a href="tel:+15551234567" className="flex items-center gap-2 font-bold hover:text-gray-200">
               <Phone size={18} />
               (555) 123-4567
             </a>
@@ -32,7 +31,7 @@ function App() {
         {/* Navigation Bar */}
         <nav className="bg-white shadow-md sticky top-0 z-50">
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-            {/* Logo Placeholder */}
+            {/* Logo */}
             <Link to="/" className="text-2xl font-extrabold text-hvac-blue">SCP REFRIGERATION</Link>
 
             {/* Desktop Menu */}
