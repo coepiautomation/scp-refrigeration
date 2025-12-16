@@ -53,7 +53,7 @@ const Home = () => {
               <Link to="/contact" className="bg-hvac-blue hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-blue-500/30 transition transform hover:-translate-y-1">
                 Get a Free Quote
               </Link>
-              <a href="tel:+15551234567" className="bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 font-bold py-4 px-8 rounded-lg transition flex items-center justify-center gap-2">
+              <a href="tel:+19407771234" className="bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 font-bold py-4 px-8 rounded-lg transition flex items-center justify-center gap-2">
                 <Phone size={20} className="text-hvac-blue" /> (555) 123-4567
               </a>
             </div>

@@ -22,7 +22,7 @@ function App() {
         <div className="bg-hvac-blue text-white py-2 px-4 text-center md:text-right">
           <div className="container mx-auto flex justify-between items-center md:justify-end">
             <span className="text-sm md:text-base font-medium mr-4 hidden md:inline">Emergency Service 24/7</span>
-            <a href="tel:+15551234567" className="flex items-center gap-2 font-bold hover:text-gray-200">
+            <a href="tel:+19407771234" className="flex items-center gap-2 font-bold hover:text-gray-200">
               <Phone size={18} />
               (555) 123-4567
             </a>
