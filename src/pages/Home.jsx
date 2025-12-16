@@ -45,7 +45,7 @@ const Home = () => {
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              We keep Grand Prairie homes and businesses comfortable year-round. 
+              We keep North Texas homes and businesses comfortable year-round. 
               No hidden fees, just quality refrigeration and HVAC work.
             </p>
             
