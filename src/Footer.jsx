@@ -35,7 +35,7 @@ const Footer = () => {
 
         {/* Column 3: Contact & Hours */}
         <div>
-          <h4 className="text-lg font-bold mb-6 text-hvac-blue">Contact & Hours</h4>
+          <h4 className="text-lg font-bold mb-6 text-hvac-blue">Contact Us</h4>
           <div className="space-y-4 text-sm">
             <div className="flex items-center gap-3">
               <Phone size={18} className="text-hvac-red flex-shrink-0" />
@@ -57,12 +57,13 @@ const Footer = () => {
 
         {/* Column 4: Social Media & Legal */}
         <div>
-          <h4 className="text-lg font-bold mb-6 text-hvac-blue">Follow Us</h4>
+          {/*<h4 className="text-lg font-bold mb-6 text-hvac-blue">Follow Us</h4>
           <div className="flex space-x-4 mb-8">
             <a href="#" className="text-gray-400 hover:text-blue-500 transition"><Facebook size={24} /></a>
             <a href="#" className="text-gray-400 hover:text-pink-500 transition"><Instagram size={24} /></a>
             <a href="#" className="text-gray-400 hover:text-blue-400 transition"><Twitter size={24} /></a>
-          </div>
+          </div>*/}
+          
           
           <h4 className="text-lg font-bold mb-4 text-hvac-blue">Business Hours</h4>
           <p className="text-sm text-gray-400">

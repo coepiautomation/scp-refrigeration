@@ -27,7 +27,7 @@ function App() {
             <span className="text-sm md:text-base font-medium mr-4 hidden md:inline">Emergency Service 24/7</span>
             <a href="tel:+19407771234" className="flex items-center gap-2 font-bold hover:text-gray-200">
               <Phone size={18} />
-              (555) 123-4567
+              (940) 777-1234
             </a>
           </div>
         </div>

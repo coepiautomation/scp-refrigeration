@@ -54,7 +54,7 @@ const Home = () => {
                 Get a Free Quote
               </Link>
               <a href="tel:+19407771234" className="bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 font-bold py-4 px-8 rounded-lg transition flex items-center justify-center gap-2">
-                <Phone size={20} className="text-hvac-blue" /> (555) 123-4567
+                <Phone size={20} className="text-hvac-blue" /> (940) 777-1234
               </a>
             </div>
 
