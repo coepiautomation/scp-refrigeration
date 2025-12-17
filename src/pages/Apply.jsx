@@ -3,7 +3,6 @@ import { Upload, Send, CheckCircle, FileText, User, Phone, Mail, Briefcase } fro
 
 const Apply = () => {
   const [status, setStatus] = useState('idle');
-  // 1. NEW: State to hold the file object
   const [file, setFile] = useState(null); 
   
   const [formData, setFormData] = useState({
@@ -15,7 +14,6 @@ const Apply = () => {
     message: ''
   });
 
-  // 2. NEW: Handle file selection
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
@@ -26,15 +24,13 @@ const Apply = () => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
 
-  // 3. UPDATED: Submit logic using FormData for file support
+  // --- UPDATED SUBMIT FUNCTION START ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('submitting');
 
-    // YOUR N8N WEBHOOK URL
     const WEBHOOK_URL = "https://n8n.coepi.co/webhook/submit-application";
 
-    // Create the FormData package
     const data = new FormData();
     data.append('name', formData.name);
     data.append('email', formData.email);
@@ -44,26 +40,27 @@ const Apply = () => {
     data.append('message', formData.message);
     data.append('submittedAt', new Date().toLocaleString());
     
-    // Append the file if one exists
-    // Note: The name 'resume' must match the "Binary Property" field in your n8n Webhook node
     if (file) {
       data.append('resume', file);
     }
 
     try {
+      // 1. Send the request (Standard Mode)
       const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
-        // IMPORTANT: Do NOT set Content-Type header when sending FormData
-        // The browser automatically sets it to multipart/form-data with the correct boundary
+        // No headers or 'no-cors' needed here. Browser handles boundary automatically.
         body: data, 
       });
 
+      // 2. Check response
       if (response.ok) {
         setStatus('success');
-        // Clear form and file state
         setFile(null);
         setFormData({ name: '', email: '', phone: '', position: 'HVAC Technician', experience: '', message: '' });
       } else {
+        // 3. Log the server error if something goes wrong
+        const errorText = await response.text(); 
+        console.error("Server refused:", errorText);
         setStatus('error');
       }
     } catch (error) {
@@ -71,6 +68,7 @@ const Apply = () => {
       setStatus('error');
     }
   };
+  // --- UPDATED SUBMIT FUNCTION END ---
 
   return (
     <div className="bg-gray-50 min-h-screen py-16">
@@ -128,14 +126,14 @@ const Apply = () => {
               </div>
             </div>
 
-            {/* Resume Upload - NOW FULLY WIRED UP */}
+            {/* Resume Upload */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Upload Resume (PDF/Word)</label>
               <input
                 type="file"
                 id="resume-upload"
                 className="hidden" 
-                onChange={handleFileChange} // Connected to state
+                onChange={handleFileChange}
                 accept=".pdf,.doc,.docx"
               />
               <label 
