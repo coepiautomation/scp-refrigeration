@@ -31,7 +31,7 @@ const Apply = () => {
 
     // CHANGE THIS: Use your new Coolify Python API URL
     // Make sure to add "/apply" at the end because that's what we named the route in main.py
-    const API_URL = "https://fcsog8800kcksss4840oogww.154.12.252.28.sslip.io/apply";
+    const API_URL = "https://api.coepi.co/apply";
 
     const data = new FormData();
     data.append('name', formData.name);
