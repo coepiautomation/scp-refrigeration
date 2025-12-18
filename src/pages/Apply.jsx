@@ -24,12 +24,14 @@ const Apply = () => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
 
-  // --- UPDATED SUBMIT FUNCTION START ---
+  // --- UPDATED SUBMIT FUNCTION START USING PYTHON ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('submitting');
 
-    const WEBHOOK_URL = "https://n8n.coepi.co/webhook/submit-application";
+    // CHANGE THIS: Use your new Coolify Python API URL
+    // Make sure to add "/apply" at the end because that's what we named the route in main.py
+    const API_URL = "https://fcsog8800kcksss4840oogww.154.12.252.28.sslip.io/apply";
 
     const data = new FormData();
     data.append('name', formData.name);
@@ -38,33 +40,30 @@ const Apply = () => {
     data.append('position', formData.position);
     data.append('experience', formData.experience);
     data.append('message', formData.message);
-    data.append('submittedAt', new Date().toLocaleString());
     
+    // This MUST be named 'resume' to match the Python code
     if (file) {
       data.append('resume', file);
     }
 
     try {
-      // 1. Send the request (Standard Mode)
-      const response = await fetch(WEBHOOK_URL, {
+      const response = await fetch(API_URL, {
         method: 'POST',
-        // No headers or 'no-cors' needed here. Browser handles boundary automatically.
+        // No headers needed, browser handles multipart boundaries
         body: data, 
       });
 
-      // 2. Check response
       if (response.ok) {
         setStatus('success');
         setFile(null);
         setFormData({ name: '', email: '', phone: '', position: 'HVAC Technician', experience: '', message: '' });
       } else {
-        // 3. Log the server error if something goes wrong
-        const errorText = await response.text(); 
-        console.error("Server refused:", errorText);
+        const errorData = await response.json();
+        console.error("API Error:", errorData.detail);
         setStatus('error');
       }
     } catch (error) {
-      console.error("Submission Error:", error);
+      console.error("Connection Error:", error);
       setStatus('error');
     }
   };
