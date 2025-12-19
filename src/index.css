@@ -6,3 +6,20 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Target the Retell Iframe directly by its source URL */
+iframe[src*="retellai.com"] {
+  left: 32px !important;    /* 2rem equivalent */
+  right: auto !important;   /* Kill the default right positioning */
+  bottom: 32px !important;
+  position: fixed !important;
+  transform: none !important; /* Prevent any internal alignment shifts */
+}
+
+/* Target the wrapper if it exists */
+#retell-widget-container, 
+.retell-widget-container {
+  left: 32px !important;
+  right: auto !important;
+  bottom: 32px !important;
+}
