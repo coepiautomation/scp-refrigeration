@@ -6,6 +6,7 @@ window.logoPath = logo;
 import Footer from './Footer';
 import Careers from './pages/Careers'
 import Apply from './pages/Apply'
+import BookingModal from "./components/BookingModal";
 
 // IMPORT REAL PAGES
 import Home from './pages/Home';
@@ -17,6 +18,8 @@ import Contact from './pages/Contact';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+// Add the new state for the Booking Modal
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
     <Router>
@@ -86,7 +89,28 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/apply" element={<Apply />} />
         </Routes>
+
+
           <Footer />
+
+{/* --- ADD THE NEW BOOKING BUTTON HERE --- */}
+        {/* This stays fixed at the bottom right as the user scrolls */}
+        <button 
+          onClick={() => setIsBookingOpen(true)}
+          className="fixed bottom-8 right-8 z-[999] bg-hvac-blue hover:bg-blue-800 text-white px-6 py-4 rounded-full shadow-2xl font-bold flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
+        >
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span className="hidden md:inline">Schedule Service</span>
+        </button>
+
+        {/* --- ADD THE BOOKING MODAL COMPONENT HERE --- */}
+        <BookingModal 
+          isOpen={isBookingOpen} 
+          onClose={() => setIsBookingOpen(false)} 
+        />
+
       </div>
     </Router>
   );
