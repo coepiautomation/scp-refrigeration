@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'; // Added useEffect here
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Phone, Menu, X } from 'lucide-react';
 import logo from './assets/SCP-Refrigeration-Logo-1024x741.png';
