@@ -17,6 +17,21 @@ const BookingModal = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+const handleFinalSubmit = async () => {
+  try {
+    // This sends the data to n8n workflow for Jobber integration
+    await fetch("https://n8n.coepi.co/webhook/booking", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bookingData)
+    });
+    nextStep(); // Move to the "🎉 Request Sent" screen
+  } catch (error) {
+    console.error("Booking error:", error);
+    alert("Something went wrong. Please call us directly.");
+  }
+};
+
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden text-gray-900 dark:text-white">
@@ -76,11 +91,44 @@ const BookingModal = ({ isOpen, onClose }) => {
 
           {step === 3 && (
             <div className="animate-in fade-in">
-              <h2 className="text-2xl font-bold mb-6">Your Details</h2>
+              <h2 className="text-2xl font-bold mb-4">Review & Contact Details</h2>
+              
+              {/* Simple Review Summary */}
+              <div className="bg-blue-50 dark:bg-blue-500/10 p-4 rounded-xl mb-6 text-sm">
+                <p><strong>Service:</strong> {bookingData.serviceType.toUpperCase()}</p>
+                <p><strong>Date:</strong> {bookingData.date} at {bookingData.time}</p>
+              </div>
+
               <div className="space-y-4">
-                <input placeholder="First Name" className="w-full p-3 bg-gray-50 dark:bg-white/5 border rounded-lg" onChange={(e) => setBookingData({...bookingData, firstName: e.target.value})} />
-                <input placeholder="Last Name" className="w-full p-3 bg-gray-50 dark:bg-white/5 border rounded-lg" onChange={(e) => setBookingData({...bookingData, lastName: e.target.value})} />
-                <button onClick={nextStep} className="w-full py-4 bg-blue-600 text-white rounded-xl font-bold">Review & Book</button>
+                <div className="grid grid-cols-2 gap-4">
+                  <input 
+                    placeholder="First Name" 
+                    className="p-3 bg-gray-50 dark:bg-white/5 border rounded-lg" 
+                    onChange={(e) => setBookingData({...bookingData, firstName: e.target.value})} 
+                  />
+                  <input 
+                    placeholder="Last Name" 
+                    className="p-3 bg-gray-50 dark:bg-white/5 border rounded-lg" 
+                    onChange={(e) => setBookingData({...bookingData, lastName: e.target.value})} 
+                  />
+                </div>
+                <input 
+                  placeholder="Email Address" 
+                  className="w-full p-3 bg-gray-50 dark:bg-white/5 border rounded-lg" 
+                  onChange={(e) => setBookingData({...bookingData, email: e.target.value})} 
+                />
+                <input 
+                  placeholder="Phone Number" 
+                  className="w-full p-3 bg-gray-50 dark:bg-white/5 border rounded-lg" 
+                  onChange={(e) => setBookingData({...bookingData, phone: e.target.value})} 
+                />
+                
+                <button 
+                  onClick={handleFinalSubmit} 
+                  className="w-full py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg"
+                >
+                  Confirm Appointment Request
+                </button>
               </div>
             </div>
           )}
