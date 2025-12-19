@@ -40,3 +40,13 @@
 .read-the-docs {
   color: #888;
 }
+
+/* This targets the actual iframe or div that Retell injects */
+iframe[src*="retellai.com"], 
+#retell-widget-container,
+div[class*="retell"] {
+  left: 2rem !important;
+  right: auto !important;
+  bottom: 2rem !important;
+  position: fixed !important;
+}
