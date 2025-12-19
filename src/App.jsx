@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react'; // Added useEffect here
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Phone, Menu, X } from 'lucide-react';
@@ -20,6 +21,35 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 // Add the new state for the Booking Modal
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+
+// Inside your App() function in App.jsx
+useEffect(() => {
+  const fixRetellAlignment = () => {
+    // 1. Find the host div (the one with z-index 999999)
+    const host = document.querySelector('div[style*="z-index: 999999"]');
+    
+    if (host && host.shadowRoot) {
+      // 2. Reach inside the Shadow DOM to find the chat window
+      const chatWindow = host.shadowRoot.querySelector('.retell-chat-window');
+      const fab = host.shadowRoot.querySelector('.retell-fab');
+
+      if (chatWindow) {
+        // 3. Force the window to align left
+        chatWindow.style.setProperty('right', 'auto', 'important');
+        chatWindow.style.setProperty('left', '0', 'important');
+      }
+      
+      // Optional: If the FAB itself looks off, you can adjust it here too
+      if (fab) {
+        fab.style.setProperty('margin-left', '0', 'important');
+      }
+    }
+  };
+
+  // Run every 1s for 5s to catch the widget when it finishes injecting
+  const interval = setInterval(fixRetellAlignment, 1000);
+  return () => clearInterval(interval);
+}, []);
 
   return (
     <Router>
