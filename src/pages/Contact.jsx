@@ -7,17 +7,22 @@ const Contact = () => {
     name: '',
     phone: '',
     email: '',
-    message: ''
+    message: '',
+    isEmergency: false 
   });
   
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
 
   // REPLACE THIS WITH YOUR N8N WEBHOOK URL LATER
-  const WEBHOOK_URL = ""; 
+  const WEBHOOK_URL = "https://n8n.coepi.co/webhook/scp-customer-inquiry"; 
 
   // 2. HANDLE INPUT CHANGES
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({ 
+      ...formData, 
+      [name]: type === 'checkbox' ? checked : value 
+    });
   };
 
   // 3. HANDLE FORM SUBMISSION
@@ -163,6 +168,28 @@ const Contact = () => {
                   />
                 </div>
               </div>
+
+              {/* NEW: Emergency Checkbox */}
+              <div className={`p-4 rounded-lg border-2 transition-all ${formData.isEmergency ? 'bg-red-50 border-red-500 shadow-md' : 'bg-gray-50 border-gray-200'}`}>
+                <div className="flex items-center gap-3">
+                    <input 
+                    type="checkbox" 
+                    id="isEmergency"
+                    name="isEmergency"
+                    checked={formData.isEmergency}
+                    onChange={handleChange}
+                    className="w-6 h-6 text-hvac-red rounded focus:ring-hvac-red cursor-pointer"
+                    />
+                    <label htmlFor="isEmergency" className="cursor-pointer select-none">
+                    <span className={`block font-bold ${formData.isEmergency ? 'text-red-700' : 'text-gray-700'}`}>
+                        Is this an Emergency?
+                    </span>
+                    <span className="text-sm text-gray-500 italic">
+                        Check this box for immediate dispatch / 24-7 urgent service.
+                    </span>
+                    </label>
+                </div>
+                </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">How can we help?</label>
