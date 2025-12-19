@@ -40,13 +40,3 @@
 .read-the-docs {
   color: #888;
 }
-
-
-.retell-widget {
-  position:fixed;
-  bottom: 2rem;
-  left: 2rem; /*move to the left*/
-  z-index: 998; /* slightly lower than the booking button*/
-
-
-}
