@@ -37,18 +37,23 @@ const BookingModal = ({ isOpen, onClose }) => {
         <div className="p-8 min-h-[400px]">
           {step === 1 && (
             <div className="animate-in fade-in slide-in-from-bottom-4">
-              <h2 className="text-2xl font-bold mb-6">Service Preferences</h2>
-              <div className="grid grid-cols-2 gap-4">
-                <button onClick={() => { setBookingData({...bookingData, clientStatus: 'new'}); nextStep(); }} 
-                  className="p-6 border-2 border-gray-100 dark:border-white/10 rounded-xl hover:border-blue-500 transition-all text-left">
-                  <span className="block font-bold">New Client</span>
-                  <span className="text-sm text-gray-500">I haven't used you before</span>
-                </button>
-                <button onClick={() => { setBookingData({...bookingData, clientStatus: 'returning'}); nextStep(); }}
-                  className="p-6 border-2 border-gray-100 dark:border-white/10 rounded-xl hover:border-blue-500 transition-all text-left">
-                  <span className="block font-bold">Returning</span>
-                  <span className="text-sm text-gray-500">I'm a regular customer</span>
-                </button>
+              <h2 className="text-2xl font-bold mb-6">What can we help with?</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { id: 'ice', label: 'Ice Machine Repair', icon: '🧊' },
+                  { id: 'cooler', label: 'Walk-in Cooler/Freezer', icon: '❄️' },
+                  { id: 'hvac', label: 'AC & Heating Service', icon: '🌡️' },
+                  { id: 'emergency', label: 'Emergency - Out of Temp', icon: '🚨' }
+                ].map((item) => (
+                  <button 
+                    key={item.id}
+                    onClick={() => { setBookingData({...bookingData, serviceType: item.id}); nextStep(); }} 
+                    className="p-5 border-2 border-gray-100 dark:border-white/10 rounded-xl hover:border-blue-500 hover:bg-blue-50/50 transition-all text-left flex items-center gap-4"
+                  >
+                    <span className="text-3xl">{item.icon}</span>
+                    <span className="font-bold text-lg">{item.label}</span>
+                  </button>
+                ))}
               </div>
             </div>
           )}
