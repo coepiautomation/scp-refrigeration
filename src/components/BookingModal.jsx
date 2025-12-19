@@ -19,20 +19,24 @@ const BookingModal = ({ isOpen, onClose }) => {
 
 const handleFinalSubmit = async () => {
   try {
-    // This is the URL to your n8n instance
+    // This sends data to your n8n 'Administrator' workflow
     const response = await fetch("https://n8n.coepi.co/webhook/scp-booking", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(bookingData),
+      body: JSON.stringify({
+        // Mapping our React state to Jobber GraphQL fields
+        title: `Service Request: ${bookingData.serviceType}`, 
+        description: `Preferred Slot: ${bookingData.date} at ${bookingData.time}. Client Status: ${bookingData.clientStatus}`,
+        firstName: bookingData.firstName,
+        lastName: bookingData.lastName,
+        email: bookingData.email,
+        phone: bookingData.phone
+      }),
     });
 
-    if (response.ok) {
-      nextStep(); // Shows Step 4: Success 🎉
-    } else {
-      alert("Submission failed. Please try again or call us.");
-    }
-  } catch (error) {
-    console.error("Booking Error:", error);
+    if (response.ok) nextStep();
+  } catch (err) {
+    console.error("Integration Error:", err);
   }
 };
 
