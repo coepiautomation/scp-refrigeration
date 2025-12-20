@@ -16,20 +16,23 @@ const BookingModal = ({ isOpen, onClose }) => {
     phone: ''
   });
 
-  // 1. Generate the next 7 days for the scroller
-  const weekRange = useMemo(() => {
-    const dates = [];
-    for (let i = 0; i < 7; i++) {
-      const d = new Date();
-      d.setDate(d.getDate() + i);
-      dates.push({
-        date: d.toISOString().split('T')[0],
-        weekday: d.toLocaleDateString('en-US', { weekday: 'short' }),
-        dayNum: d.getDate()
-      });
-    }
-    return dates;
-  }, []);
+    // 1. Update weekRange to skip weekends
+    const weekRange = useMemo(() => {
+      const dates = [];
+      let current = new Date();
+      while (dates.length < 7) { // Still show 7 business days
+        const day = current.getDay();
+        if (day !== 0 && day !== 6) { // Skip Sat/Sun
+          dates.push({
+            date: current.toISOString().split('T')[0],
+            weekday: current.toLocaleDateString('en-US', { weekday: 'short' }),
+            dayNum: current.getDate()
+          });
+        }
+        current.setDate(current.getDate() + 1);
+      }
+      return dates;
+    }, []);
 
   // 2. Automatically select today and fetch data when Step 2 opens
   useEffect(() => {
@@ -154,15 +157,25 @@ const fetchWeeklyAvailability = async (start, end) => {
               {/* Time Grid */}
               <div className="grid grid-cols-3 gap-3">
                 {isLoading ? (
-                   <div className="col-span-3 text-center py-10 text-gray-400">Loading availability...</div>
+                  <div className="col-span-3 text-center py-10 text-gray-400">Syncing with Jobber...</div>
                 ) : (
                   availability[selectedDate]?.map(slot => (
                     <button 
-                      key={slot} 
-                      onClick={() => { setBookingData({...bookingData, date: selectedDate, time: slot}); nextStep(); }}
-                      className="p-3 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg hover:bg-blue-600 hover:text-white transition-all shadow-sm font-medium"
+                      key={slot.label} 
+                      disabled={!slot.isAvailable}
+                      onClick={() => { 
+                        if(slot.isAvailable) { 
+                          setBookingData({...bookingData, date: selectedDate, time: slot.label}); 
+                          nextStep(); 
+                        } 
+                      }}
+                      className={`p-3 border rounded-lg transition-all shadow-sm font-medium ${
+                        slot.isAvailable 
+                        ? "bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 hover:border-blue-600 hover:text-blue-600" 
+                        : "bg-gray-50 dark:bg-white/5 text-gray-400 border-gray-100 dark:border-white/5 cursor-not-allowed line-through opacity-50"
+                      }`}
                     >
-                      {slot}
+                      {slot.label}
                     </button>
                   ))
                 )}
