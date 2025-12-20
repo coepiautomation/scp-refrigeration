@@ -43,20 +43,21 @@ const BookingModal = ({ isOpen, onClose }) => {
 const fetchWeeklyAvailability = async (start, end) => {
     setIsLoading(true);
     try {
-const res = await fetch(`https://n8n.coepi.co/webhook/get-availability?startDate=${start}&endDate=${end}&t=${new Date().getTime()}`);
-      const data = await res.json();
+      const res = await fetch(`https://n8n.coepi.co/webhook/get-availability?startDate=${start}&endDate=${end}&t=${new Date().getTime()}`);
+      const rawData = await res.json();
       
-      // FIX: Tell React to look specifically for the 'slots' key from n8n
+      // Safety Logic: If n8n sends an array [ {...} ], grab the first item.
+      const data = Array.isArray(rawData) ? rawData[0] : rawData;
+      
       if (data && data.slots) {
-        setAvailability(data.slots); 
+        setAvailability(data.slots);
       } else {
-        setAvailability(data || {}); 
+        console.warn("Could not find 'slots' in response:", data);
+        setAvailability({});
       }
     } catch (err) {
       console.error("Availability Fetch Error:", err);
-      const fallback = {};
-      weekRange.forEach(d => fallback[d.date] = ["9:00 AM", "11:00 AM", "2:00 PM", "4:00 PM"]);
-      setAvailability(fallback);
+      setAvailability({});
     } finally {
       setIsLoading(false);
     }
