@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 
+const [availableSlots, setAvailableSlots] = useState([]);
+// Fetch slots when a date is selected
+const fetchSlots = async (selectedDate) => {
+  const res = await fetch(`https://n8n.coepi.co/webhook/get-availability?date=${selectedDate}`);
+  const data = await res.json();
+  setAvailableSlots(data.slots); // e.g. ["9:00 AM", "2:00 PM"]
+};
+
 const BookingModal = ({ isOpen, onClose }) => {
   const [step, setStep] = useState(1);
   const [bookingData, setBookingData] = useState({
@@ -17,26 +25,32 @@ const BookingModal = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+// PUT THIS INSIDE YOUR BookingModal COMPONENT
 const handleFinalSubmit = async () => {
   try {
-    // This sends data to your n8n 'Administrator' workflow
+    // 1. Send data to your n8n "Intake" Webhook
     const response = await fetch("https://n8n.coepi.co/webhook/scp-booking", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        // Mapping our React state to Jobber GraphQL fields
-        title: `Service Request: ${bookingData.serviceType}`, 
-        description: `Preferred Slot: ${bookingData.date} at ${bookingData.time}. Client Status: ${bookingData.clientStatus}`,
-        firstName: bookingData.firstName,
-        lastName: bookingData.lastName,
-        email: bookingData.email,
-        phone: bookingData.phone
+        // This payload matches the RequestCreateInput requirements 
+        title: `${bookingData.serviceType.toUpperCase()} - Web Request`,
+        description: `Requested Slot: ${bookingData.date} at ${bookingData.time}`,
+        client: {
+          firstName: bookingData.firstName,
+          lastName: bookingData.lastName,
+          email: bookingData.email,
+          phone: bookingData.phone
+        },
+        // If they are a new client, we let n8n handle the Property creation
       }),
     });
 
-    if (response.ok) nextStep();
-  } catch (err) {
-    console.error("Integration Error:", err);
+    if (response.ok) {
+      nextStep(); // Shows "Request Sent!" 🎉
+    }
+  } catch (error) {
+    console.error("Submission Error:", error);
   }
 };
 
@@ -83,15 +97,17 @@ const handleFinalSubmit = async () => {
           )}
 
           {step === 2 && (
-            <div className="animate-in fade-in">
-              <h2 className="text-2xl font-bold mb-6">Choose a Time</h2>
-              <input type="date" className="w-full p-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg mb-4" 
-                onChange={(e) => setBookingData({...bookingData, date: e.target.value})} />
-              <div className="grid grid-cols-3 gap-3">
-                {['8:00 AM', '10:00 AM', '1:00 PM', '3:00 PM'].map(t => (
-                  <button key={t} onClick={() => { setBookingData({...bookingData, time: t}); nextStep(); }}
-                    className="p-3 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-600 hover:text-white transition-colors">
-                    {t}
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Select an Available Time</h2>
+              <input 
+                type="date" 
+                onChange={(e) => fetchSlots(e.target.value)} 
+                className="..." 
+              />
+              <div className="grid grid-cols-3 gap-2 mt-4">
+                {availableSlots.map(slot => (
+                  <button key={slot} onClick={() => { setBookingData({...bookingData, time: slot}); nextStep(); }} className="...">
+                    {slot}
                   </button>
                 ))}
               </div>
