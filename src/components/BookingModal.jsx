@@ -43,7 +43,7 @@ const BookingModal = ({ isOpen, onClose }) => {
 const fetchWeeklyAvailability = async (start, end) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`https://n8n.coepi.co/webhook/get-availability?startDate=${start}&endDate=${end}`);
+const res = await fetch(`https://n8n.coepi.co/webhook/get-availability?startDate=${start}&endDate=${end}&t=${new Date().getTime()}`);
       const data = await res.json();
       
       // FIX: Tell React to look specifically for the 'slots' key from n8n
