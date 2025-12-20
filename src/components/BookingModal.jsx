@@ -100,30 +100,43 @@ const BookingModal = ({ isOpen, onClose }) => {
             </div>
           )}
 
-          {/* STEP 2: DYNAMIC CALENDAR */}
           {step === 2 && (
             <div className="animate-in fade-in">
-              <h2 className="text-2xl font-bold mb-4">Select an Available Time</h2>
-              <p className="text-sm text-gray-500 mb-4">Choose a date to see live availability from our Jobber calendar.</p>
-              <input 
-                type="date" 
-                onChange={(e) => fetchSlots(e.target.value)} 
-                className="w-full p-3 bg-gray-50 dark:bg-white/5 border border-gray-200 rounded-lg mb-6" 
-              />
+              <h2 className="text-2xl font-bold mb-4">Select a Time</h2>
+              
+              {/* 1. Weekly Horizontal Scroller */}
+              <div className="flex gap-2 overflow-x-auto pb-4 mb-6 snap-x">
+                {weekRange.map((dateObj) => (
+                  <button
+                    key={dateObj.date}
+                    onClick={() => setSelectedDate(dateObj.date)}
+                    className={`flex-shrink-0 w-24 p-3 rounded-xl border-2 transition-all snap-start ${
+                      selectedDate === dateObj.date 
+                      ? 'border-blue-600 bg-blue-50' 
+                      : 'border-gray-100 hover:border-gray-300'
+                    }`}
+                  >
+                    <span className="block text-xs uppercase text-gray-500">{dateObj.weekday}</span>
+                    <span className="block text-lg font-bold">{dateObj.dayNum}</span>
+                    <span className="block text-xs text-blue-600 font-medium">
+                      {availability[dateObj.date]?.length || 0} slots
+                    </span>
+                  </button>
+                ))}
+              </div>
+
+              {/* 2. Times for the selected day */}
               <div className="grid grid-cols-3 gap-3">
-                {availableSlots.map(slot => (
+                {availability[selectedDate]?.map(slot => (
                   <button 
                     key={slot} 
-                    onClick={() => { setBookingData({...bookingData, time: slot}); nextStep(); }} 
-                    className="p-3 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-600 hover:text-white transition-colors font-medium"
+                    onClick={() => { setBookingData({...bookingData, date: selectedDate, time: slot}); nextStep(); }}
+                    className="p-3 bg-white border border-gray-200 rounded-lg hover:bg-blue-600 hover:text-white transition-all shadow-sm"
                   >
                     {slot}
                   </button>
                 ))}
               </div>
-              {availableSlots.length === 0 && bookingData.date && (
-                <p className="text-center text-gray-400 mt-4 italic">Fetching latest schedule...</p>
-              )}
             </div>
           )}
 
