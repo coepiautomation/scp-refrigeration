@@ -63,28 +63,33 @@ const BookingModal = ({ isOpen, onClose }) => {
     }
   };
 
+
   const handleFinalSubmit = async () => {
-    try {
-      const response = await fetch("https://n8n.coepi.co/webhook/scp-booking", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: `${bookingData.serviceType.toUpperCase()} - Web Request`,
-          description: `Customer requested ${bookingData.time} on ${bookingData.date}`,
-          firstName: bookingData.firstName,
-          lastName: bookingData.lastName,
-          email: bookingData.email,
-          phone: bookingData.phone,
-          address: bookingData.address, // Now passing address to n8n logic
-          date: bookingData.date,
-          time: bookingData.time
-        }),
-      });
-      if (response.ok) nextStep();
-    } catch (error) {
-      console.error("Submission Error:", error);
-    }
-  };
+  setIsLoading(true); // START LOADING
+  try {
+    const response = await fetch("https://n8n.coepi.co/webhook/scp-booking", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: `${bookingData.serviceType.toUpperCase()} - Web Request`,
+        description: `Customer requested ${bookingData.time} on ${bookingData.date}`,
+        firstName: bookingData.firstName,
+        lastName: bookingData.lastName,
+        email: bookingData.email,
+        phone: bookingData.phone,
+        address: bookingData.address,
+        date: bookingData.date,
+        time: bookingData.time
+      }),
+    });
+    if (response.ok) nextStep();
+  } catch (error) {
+    console.error("Submission Error:", error);
+    alert("There was an issue. Please try again.");
+  } finally {
+    setIsLoading(false); // STOP LOADING
+  }
+};
 
   const nextStep = () => setStep(s => s + 1);
   const prevStep = () => setStep(s => s - 1);
