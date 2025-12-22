@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 const BookingModal = ({ isOpen, onClose }) => {
   const [step, setStep] = useState(1);
   const [selectedDate, setSelectedDate] = useState('');
-  const [availability, setAvailability] = useState({}); // Stores { "2025-12-19": ["9:00 AM", ...], ... }
+  const [availability, setAvailability] = useState({}); 
   const [isLoading, setIsLoading] = useState(false);
   
   const [bookingData, setBookingData] = useState({
@@ -13,57 +13,50 @@ const BookingModal = ({ isOpen, onClose }) => {
     firstName: '',
     lastName: '',
     email: '',
-    phone: ''
+    phone: '',
+    address: '' // Added for Jobber property creation
   });
 
-// 1. Update weekRange to use local date strings (YYYY-MM-DD)
-const weekRange = useMemo(() => {
-  const dates = [];
-  let current = new Date();
-  
-  while (dates.length < 7) {
-    const day = current.getDay();
-    if (day !== 0 && day !== 6) { // Skip Sat/Sun
-      // 'en-CA' format gives us YYYY-MM-DD which n8n expects
-      const dateString = current.toLocaleDateString('en-CA'); 
-      dates.push({
-        date: dateString,
-        weekday: current.toLocaleDateString('en-US', { weekday: 'short' }),
-        dayNum: current.getDate()
-      });
+  const weekRange = useMemo(() => {
+    const dates = [];
+    let current = new Date();
+    
+    while (dates.length < 7) {
+      const day = current.getDay();
+      if (day !== 0 && day !== 6) { 
+        const dateString = current.toLocaleDateString('en-CA'); 
+        dates.push({
+          date: dateString,
+          weekday: current.toLocaleDateString('en-US', { weekday: 'short' }),
+          dayNum: current.getDate()
+        });
+      }
+      current.setDate(current.getDate() + 1);
     }
-    current.setDate(current.getDate() + 1);
-  }
-  return dates;
-}, []);
+    return dates;
+  }, []);
 
-// 2. Updated useEffect to ensure the 7th business day is the 'end' date
-useEffect(() => {
-  if (step === 2 && weekRange.length > 0) {
-    const today = weekRange[0].date;
-    setSelectedDate(today);
-    // Use the last element of the calculated business week range
-    fetchWeeklyAvailability(weekRange[0].date, weekRange[weekRange.length - 1].date);
-  }
-}, [step, weekRange]);
+  useEffect(() => {
+    if (step === 2 && weekRange.length > 0) {
+      const today = weekRange[0].date;
+      setSelectedDate(today);
+      fetchWeeklyAvailability(weekRange[0].date, weekRange[weekRange.length - 1].date);
+    }
+  }, [step, weekRange]);
 
-const fetchWeeklyAvailability = async (start, end) => {
+  const fetchWeeklyAvailability = async (start, end) => {
     setIsLoading(true);
     try {
       const res = await fetch(`https://n8n.coepi.co/webhook/get-availability?startDate=${start}&endDate=${end}&t=${new Date().getTime()}`);
       const rawData = await res.json();
-      
-      // Safety Logic: If n8n sends an array [ {...} ], grab the first item.
       const data = Array.isArray(rawData) ? rawData[0] : rawData;
       
       if (data && data.slots) {
         setAvailability(data.slots);
       } else {
-        console.warn("Could not find 'slots' in response:", data);
         setAvailability({});
       }
     } catch (err) {
-      console.error("Availability Fetch Error:", err);
       setAvailability({});
     } finally {
       setIsLoading(false);
@@ -72,7 +65,6 @@ const fetchWeeklyAvailability = async (start, end) => {
 
   const handleFinalSubmit = async () => {
     try {
-      // Uses the requestCreate mutation logic 
       const response = await fetch("https://n8n.coepi.co/webhook/scp-booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -82,7 +74,8 @@ const fetchWeeklyAvailability = async (start, end) => {
           firstName: bookingData.firstName,
           lastName: bookingData.lastName,
           email: bookingData.email,
-          phone: bookingData.phone
+          phone: bookingData.phone,
+          address: bookingData.address // Now passing address to n8n logic
         }),
       });
       if (response.ok) nextStep();
@@ -100,7 +93,6 @@ const fetchWeeklyAvailability = async (start, end) => {
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden text-gray-900 dark:text-white">
         
-        {/* Progress Bar */}
         <div className="p-6 border-b border-gray-100 dark:border-white/10">
           <div className="flex justify-between items-center relative">
             <div className="absolute h-0.5 bg-gray-200 dark:bg-gray-700 w-full top-1/2 -z-10" />
@@ -139,8 +131,6 @@ const fetchWeeklyAvailability = async (start, end) => {
           {step === 2 && (
             <div className="animate-in fade-in">
               <h2 className="text-2xl font-bold mb-4">Select a Time</h2>
-              
-              {/* Weekly Scroller */}
               <div className="flex gap-2 overflow-x-auto pb-4 mb-6 snap-x no-scrollbar">
                 {weekRange.map((dateObj) => (
                   <button
@@ -158,7 +148,6 @@ const fetchWeeklyAvailability = async (start, end) => {
                 ))}
               </div>
 
-              {/* Time Grid */}
               <div className="grid grid-cols-3 gap-3">
                 {isLoading ? (
                   <div className="col-span-3 text-center py-10 text-gray-400">Syncing with Jobber...</div>
@@ -197,6 +186,14 @@ const fetchWeeklyAvailability = async (start, end) => {
                 </div>
                 <input type="email" placeholder="Email Address *" className="w-full p-3 bg-gray-50 dark:bg-white/5 border rounded-lg" onChange={(e) => setBookingData({...bookingData, email: e.target.value})} />
                 <input type="tel" placeholder="Phone Number *" className="w-full p-3 bg-gray-50 dark:bg-white/5 border rounded-lg" onChange={(e) => setBookingData({...bookingData, phone: e.target.value})} />
+                
+                {/* Full Address Field for Property Creation */}
+                <input 
+                  placeholder="Service Address (Street, City, State Zip) *" 
+                  className="w-full p-3 bg-gray-50 dark:bg-white/5 border rounded-lg" 
+                  onChange={(e) => setBookingData({...bookingData, address: e.target.value})} 
+                />
+
                 <button onClick={handleFinalSubmit} className="w-full py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg mt-4">
                   Confirm Appointment Request
                 </button>
