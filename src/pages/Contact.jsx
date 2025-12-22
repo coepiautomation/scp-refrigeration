@@ -7,8 +7,8 @@ const Contact = () => {
     name: '',
     phone: '',
     email: '',
-    message: '',
-    isEmergency: false 
+    message: ''
+  //  isEmergency: false 
   });
   
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
