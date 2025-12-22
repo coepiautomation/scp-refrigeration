@@ -169,7 +169,7 @@ const handleChange = (e) => {
                 </div>
               </div>
 
-              {/* NEW: Emergency Checkbox */}
+               {/* NEW: Emergency Checkbox 
               <div className={`p-4 rounded-lg border-2 transition-all ${formData.isEmergency ? 'bg-red-50 border-red-500 shadow-md' : 'bg-gray-50 border-gray-200'}`}>
                 <div className="flex items-center gap-3">
                     <input 
@@ -189,7 +189,7 @@ const handleChange = (e) => {
                     </span>
                     </label>
                 </div>
-                </div>
+                </div> */}
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">How can we help?</label>
