@@ -9,7 +9,7 @@ const Gallery = () => {
     { id: 1, category: 'commercial', title: 'Walk-In Cooler Install', image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=800' },
     { id: 2, category: 'residential', title: 'Standard AC Tune-up', image: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&q=80&w=800' },
     { id: 3, category: 'commercial', title: 'Rooftop Package Unit', image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=800' },
-    { id: 4, category: 'residential', title: 'Modern Mini-Split Setup', image: 'src/assets/minisplitroom.png' },
+    { id: 4, category: 'residential', title: 'Modern Mini-Split Setup', image: '' },
     { id: 5, category: 'commercial', title: 'Kitchen Exhaust System', image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=800' },
     { id: 6, category: 'residential', title: 'Furnace Replacement', image: 'https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&q=80&w=800' },
   ];
