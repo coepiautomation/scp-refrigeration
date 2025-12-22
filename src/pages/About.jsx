@@ -46,7 +46,7 @@ const About = () => {
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Mission & Approach</h2>
               <p className="text-gray-600 mb-4 text-lg">
-                At SCP Refrigeration, our work blends hands-on expertise with innovative problem-solving. Serving Sanger, TX, and the surrounding areas, we focus on shaping spaces that work better for you through energy-smart HVAC and custom refrigeration solutions.
+                At SCP Refrigeration, our work blends hands-on expertise with innovative problem-solving. Serving Fort Worth and Sanger, TX, plus the surrounding areas, we focus on shaping spaces that work better for you through energy-smart HVAC and custom refrigeration solutions.
               </p>
               <p className="text-gray-600 text-lg">
                 Every project reflects our core values: reliability, energy-conscious design, and personalized service. With upgraded tools and a proven approach, we deliver results that keep systems performing at their best.
