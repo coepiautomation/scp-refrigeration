@@ -78,16 +78,32 @@ useEffect(() => {
 
             </Link>
 
-            {/* Desktop Menu */}
-            <div className="hidden md:flex space-x-6 font-medium text-gray-700">
-              <Link to="/" className="hover:text-hvac-blue transition">Home</Link>
-              <Link to="/about" className="hover:text-hvac-blue transition">About</Link>
-              <Link to="/residential" className="hover:text-hvac-blue transition">Residential</Link>
-              <Link to="/commercial" className="hover:text-hvac-blue transition">Commercial</Link>
-              <Link to="/gallery" className="hover:text-hvac-blue transition">Gallery</Link>
-              <Link to="/careers" className="hover:text-hvac-blue transition">Careers</Link>
-              <Link to="/contact" className="bg-hvac-red text-white px-4 py-2 rounded-md hover:bg-red-700 transition">Contact Us</Link>
-            </div>
+{/* Desktop Menu */}
+{/* ADD 'items-center' TO THIS DIV CLASSNAME */}
+<div className="hidden md:flex space-x-6 font-medium text-gray-700 items-center"> 
+  <Link to="/" className="hover:text-hvac-blue transition">Home</Link>
+  <Link to="/about" className="hover:text-hvac-blue transition">About</Link>
+  
+  {/* SERVICES DROPDOWN WRAPPER */}
+  <div className="relative group flex items-center h-full py-2">
+    <Link to="/services" className="hover:text-hvac-blue transition flex items-center gap-1">
+      Services
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+      </svg>
+    </Link>
+    
+    {/* Dropdown Menu */}
+    <div className="absolute top-full left-0 hidden group-hover:block bg-white shadow-xl rounded-lg py-2 w-56 border border-gray-100 z-[100]">
+      <Link to="/residential" className="block px-4 py-2 hover:bg-blue-50 hover:text-hvac-blue text-gray-700 transition-colors">Residential HVAC</Link>
+      <Link to="/commercial" className="block px-4 py-2 hover:bg-blue-50 hover:text-hvac-red text-gray-700 transition-colors">Commercial Refrigeration</Link>
+    </div>
+  </div>
+
+  <Link to="/gallery" className="hover:text-hvac-blue transition">Gallery</Link>
+  <Link to="/careers" className="hover:text-hvac-blue transition">Careers</Link>
+  <Link to="/contact" className="bg-hvac-red text-white px-4 py-2 rounded-md hover:bg-red-700 transition">Contact Us</Link>
+</div>
 
             {/* Mobile Menu Button */}
             <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -100,6 +116,7 @@ useEffect(() => {
             <div className="md:hidden bg-white border-t p-4 flex flex-col space-y-4 shadow-lg">
               <Link to="/" className="block text-lg" onClick={() => setIsMenuOpen(false)}>Home</Link>
               <Link to="/about" className="block text-lg" onClick={() => setIsMenuOpen(false)}>About</Link>
+              <Link to="/services" className="block text-lg" onClick={() => setIsMenuOpen(false)}>Services</Link>
               <Link to="/residential" className="block text-lg" onClick={() => setIsMenuOpen(false)}>Residential</Link>
               <Link to="/commercial" className="block text-lg" onClick={() => setIsMenuOpen(false)}>Commercial</Link>
               <Link to="/gallery" className="block text-lg" onClick={() => setIsMenuOpen(false)}>Gallery</Link>
