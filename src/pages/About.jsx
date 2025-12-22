@@ -1,5 +1,6 @@
 import React from 'react';
 import { Wrench, ShieldCheck, Zap, Users, BarChart3, Clock } from 'lucide-react';
+import Testimonials from '../components/Testimonials';
 
 const About = () => {
   const stats = [
@@ -98,7 +99,7 @@ const About = () => {
           </div>
         </div>
       </section>
-
+<Testimonials />
       {/* CTA SECTION */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 text-center">
