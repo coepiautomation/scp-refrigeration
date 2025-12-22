@@ -20,7 +20,11 @@ const TestimonialCard = ({ review }) => (
         <h4 className="font-bold text-gray-900 leading-none">{review.name}</h4>
         <span className="text-xs text-gray-500">{review.date}</span>
       </div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_Reference_Icon.svg" className="w-5 h-5 ml-auto" alt="Google" />
+      <img 
+  src="https://www.gstatic.com/images/branding/product/2x/googleg_48dp.png" 
+  className="w-5 h-5 ml-auto opacity-80" 
+  alt="Google" 
+/>
     </div>
     <div className="flex text-yellow-400 mb-3">
       {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
