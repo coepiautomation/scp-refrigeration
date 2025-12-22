@@ -14,7 +14,7 @@ const Contact = () => {
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
 
   // REPLACE THIS WITH YOUR N8N WEBHOOK URL LATER
-  const WEBHOOK_URL = "https://n8n.coepi.co/webhook/scp-customer-inquiry"; 
+  const WEBHOOK_URL = "https://n8n.coepi.co/webhook/scp-contact-form"; 
 
   // 2. HANDLE INPUT CHANGES
 const handleChange = (e) => {
