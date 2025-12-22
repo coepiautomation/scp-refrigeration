@@ -43,7 +43,7 @@ const Testimonials = () => {
           className="flex"
           animate={{ x: [0, -1750] }} // Adjust based on (card width + margin) * count
           transition={{ 
-            x: { repeat: Infinity, repeatType: "loop", duration: 30, ease: "linear" } 
+            x: { repeat: Infinity, repeatType: "loop", duration: 60, ease: "linear" } 
           }}
         >
           {/* Render reviews twice for seamless loop */}
