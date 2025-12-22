@@ -11,6 +11,7 @@ import BookingModal from "./components/BookingModal";
 // IMPORT REAL PAGES
 import Home from './pages/Home';
 import About from './pages/About';
+import Services from './pages/Services';
 import Residential from './pages/Residential';
 import Commercial from './pages/Commercial';
 import Gallery from './pages/Gallery';
