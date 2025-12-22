@@ -75,7 +75,9 @@ const BookingModal = ({ isOpen, onClose }) => {
           lastName: bookingData.lastName,
           email: bookingData.email,
           phone: bookingData.phone,
-          address: bookingData.address // Now passing address to n8n logic
+          address: bookingData.address, // Now passing address to n8n logic
+          date: bookingData.date,
+          time: bookingData.time
         }),
       });
       if (response.ok) nextStep();
