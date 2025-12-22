@@ -16,32 +16,36 @@ const BookingModal = ({ isOpen, onClose }) => {
     phone: ''
   });
 
-    // 1. Update weekRange to skip weekends
-    const weekRange = useMemo(() => {
-      const dates = [];
-      let current = new Date();
-      while (dates.length < 7) { // Still show 7 business days
-        const day = current.getDay();
-        if (day !== 0 && day !== 6) { // Skip Sat/Sun
-          dates.push({
-            date: current.toISOString().split('T')[0],
-            weekday: current.toLocaleDateString('en-US', { weekday: 'short' }),
-            dayNum: current.getDate()
-          });
-        }
-        current.setDate(current.getDate() + 1);
-      }
-      return dates;
-    }, []);
-
-  // 2. Automatically select today and fetch data when Step 2 opens
-  useEffect(() => {
-    if (step === 2 && weekRange.length > 0) {
-      const today = weekRange[0].date;
-      setSelectedDate(today);
-      fetchWeeklyAvailability(weekRange[0].date, weekRange[6].date);
+// 1. Update weekRange to use local date strings (YYYY-MM-DD)
+const weekRange = useMemo(() => {
+  const dates = [];
+  let current = new Date();
+  
+  while (dates.length < 7) {
+    const day = current.getDay();
+    if (day !== 0 && day !== 6) { // Skip Sat/Sun
+      // 'en-CA' format gives us YYYY-MM-DD which n8n expects
+      const dateString = current.toLocaleDateString('en-CA'); 
+      dates.push({
+        date: dateString,
+        weekday: current.toLocaleDateString('en-US', { weekday: 'short' }),
+        dayNum: current.getDate()
+      });
     }
-  }, [step, weekRange]);
+    current.setDate(current.getDate() + 1);
+  }
+  return dates;
+}, []);
+
+// 2. Updated useEffect to ensure the 7th business day is the 'end' date
+useEffect(() => {
+  if (step === 2 && weekRange.length > 0) {
+    const today = weekRange[0].date;
+    setSelectedDate(today);
+    // Use the last element of the calculated business week range
+    fetchWeeklyAvailability(weekRange[0].date, weekRange[weekRange.length - 1].date);
+  }
+}, [step, weekRange]);
 
 const fetchWeeklyAvailability = async (start, end) => {
     setIsLoading(true);
