@@ -112,6 +112,7 @@ useEffect(() => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/residential" element={<Residential />} />
           <Route path="/commercial" element={<Commercial />} />
           <Route path="/gallery" element={<Gallery />} />
